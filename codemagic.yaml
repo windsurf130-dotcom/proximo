@@ -4,35 +4,29 @@ workflows:
     max_build_duration: 60
 
     environment:
-      flutter: 3.24.3
+      flutter: stable
       java: 17
-      xcode: latest
+      groups:
+        - google_credentials
       vars:
-        GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m'"
+        GRADLE_OPTS: -Dorg.gradle.jvmargs='-Xmx4096m'
 
     scripts:
-      - name: Show Flutter version
-        script: flutter --version
-
       - name: Clean project
         script: |
           flutter clean
-          rm -rf android/.gradle
 
       - name: Get dependencies
-        script: flutter pub get
-
-      - name: Prepare Gradle
         script: |
-          cd android
-          chmod +x gradlew
-          cd ..
+          flutter pub get
 
-      - name: Build APK
-        script: flutter build apk --release --no-tree-shake-icons
+      - name: Build Release APK
+        script: |
+          flutter build apk --release --no-tree-shake-icons
 
-      - name: Build AAB
-        script: flutter build appbundle --release --no-tree-shake-icons
+      - name: Build Release AAB
+        script: |
+          flutter build appbundle --release --no-tree-shake-icons
 
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
