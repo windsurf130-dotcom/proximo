@@ -4,29 +4,22 @@ workflows:
     max_build_duration: 60
 
     environment:
-      flutter: stable
-      java: 17
-      groups:
-        - google_credentials
-      vars:
-        GRADLE_OPTS: -Dorg.gradle.jvmargs='-Xmx4096m'
+      flutter: "3.24.5"     # FIX: evita bug do Kotlin
+      xcode: latest
+      java: "17"
 
     scripts:
-      - name: Clean project
-        script: |
-          flutter clean
+      - name: Clean
+        script: flutter clean
 
       - name: Get dependencies
-        script: |
-          flutter pub get
+        script: flutter pub get
 
       - name: Build Release APK
-        script: |
-          flutter build apk --release --no-tree-shake-icons
+        script: flutter build apk --release
 
       - name: Build Release AAB
-        script: |
-          flutter build appbundle --release --no-tree-shake-icons
+        script: flutter build appbundle --release
 
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
