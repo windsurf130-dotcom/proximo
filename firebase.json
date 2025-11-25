@@ -1,0 +1,10 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": true,
+        "projectId": "to-chegando-motoboy-24b4a"
+      }
+    }
+  }
+}
